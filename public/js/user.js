@@ -6,12 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             userInfoDiv.innerHTML = `
-                <p><strong>İsim:</strong> ${data.name}</p>
-                <p><strong>Email:</strong> ${data.email}</p>
-                <p><strong>Telefon:</strong> ${data.phone}</p>
+                <p><strong>Ad:</strong> ${data.ad}</p>
+                <p><strong>Soyad:</strong> ${data.soyad}</p>
+                <p><strong>Şifre:</strong> ${data.password}</p>
             `;
         })
         .catch(error => {
             userInfoDiv.innerHTML = `<p>Bilgiler yüklenemedi. Hata: ${error.message}</p>`;
         });
 });
+
+

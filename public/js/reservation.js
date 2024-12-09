@@ -2,27 +2,77 @@
 const params = new URLSearchParams(window.location.search);
 const hotelName = params.get('hotel');
 
-// DOMContentLoaded ile DOM yüklendikten sonra işlemleri yap
 document.addEventListener('DOMContentLoaded', () => {
-    // Otel adını forma yerleştir
-    if (hotelName) {
-        document.getElementById('hotel-name').value = hotelName;
-    }
+    // Seçilemeyecek tarihler
+    const disabledDates = [
+        "2024-12-17", // Örnek tarihler
+        "2024-12-22",
+        "2024-12-27"
+    ];
 
-    // Form gönderimini işleyerek bildirim göster
-    document.getElementById('reservation-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Formun sunucuya gönderilmesini engelle
+    // Giriş tarihi takvimi
+    flatpickr("#check-in", {
+        locale: "tr", // Türkçe dil desteği
+        disable: disabledDates.map(date => new Date(date)), // Seçilemeyecek tarihler
+        dateFormat: "Y-m-d", // Tarih formatı
+        minDate: "today", // Bugünden önceki tarihler devre dışı
+        onDayCreate: function(dObj, dStr, fp, dayElem) {
+            // Seçilemez günleri kırmızı çarpı ile göster
+            const day = dayElem.dateObj.toISOString().split('T')[0]; // Günün tarihi
+            if (disabledDates.includes(day)) {
+                dayElem.classList.add('disabled-day'); // Özel sınıf eklenir
+            }
+        }
+    });
 
-        // Form verilerini al
+    // Çıkış tarihi takvimi
+    flatpickr("#check-out", {
+        locale: "tr",
+        disable: disabledDates.map(date => new Date(date)),
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        onDayCreate: function(dObj, dStr, fp, dayElem) {
+            const day = dayElem.dateObj.toISOString().split('T')[0]; // Günün tarihi
+            if (disabledDates.includes(day)) {
+                dayElem.classList.add('disabled-day');
+            }
+        }
+    });
+
+    // Form gönderimini işleme
+    document.getElementById('reservation-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
         const checkIn = document.getElementById('check-in').value;
         const checkOut = document.getElementById('check-out').value;
 
-        // Bildirim mesajını ayarla
-        const notification = document.getElementById('notification');
-        notification.textContent = `${hotelName} otelinde ${checkIn} - ${checkOut} tarih aralığında rezervasyon yapılmıştır.`;
-        notification.style.display = 'block'; // Bildirimi göster
+        try {
+            const response = await fetch('/api/reservation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ hotelName, checkIn, checkOut })
+            });
 
-        // Formu temizle
-        this.reset();
+            const result = await response.json();
+
+            // Bildirim mesajı
+            const notification = document.getElementById('notification');
+            if (response.ok) {
+                notification.textContent = result.message;
+                notification.style.color = 'green';
+            } else {
+                notification.textContent = result.message || 'Bir hata oluştu.';
+                notification.style.color = 'red';
+            }
+            notification.style.display = 'block';
+
+            // Formu temizle
+            this.reset();
+        } catch (error) {
+            console.error('Hata:', error);
+            alert('Rezervasyon işlemi sırasında bir hata oluştu.');
+        }
     });
 });
