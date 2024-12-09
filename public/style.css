@@ -1,0 +1,198 @@
+/* Genel Sayfa Stilleri */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f5c56a, #fbd77d, #edd9a3);
+  color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container, .login-container, .map-container, .profile-container, .reservation-container, .user-container {
+  background-color: rgba(192, 143, 50, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  color: #f5f5f5;
+}
+
+/* Başlıklar */
+h1 {
+  color: #fbd77d;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+h3 {
+  color: #fbd77d;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Form Elemanları */
+input, button, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #fbd77d;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background: rgba(255, 215, 125, 0.9);
+  color: #333;
+}
+
+input:focus, button:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #fbd77d;
+  box-shadow: 0 0 5px rgba(251, 215, 125, 0.5);
+}
+
+button {
+  background: #fbd77d;
+  color: #333;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #c08f32;
+  color: #fff;
+}
+
+button:active {
+  background: #a07029;
+}
+
+/* Harita Sayfası */
+.map-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 900px;
+  width: 95%;
+  background-color: rgba(255, 215, 125, 0.9);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#map {
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #fbd77d;
+}
+
+.info-box {
+  background-color: rgba(251, 215, 125, 0.95);
+  border: 1px solid #c08f32;
+  border-radius: 8px;
+  padding: 10px;
+  color: #333;
+  text-align: left;
+  width: 200px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.info-box label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.category-checkbox {
+  margin-right: 10px;
+}
+
+/* Rezervasyon Sayfası */
+#notification {
+  display: none;
+  background-color: rgba(192, 143, 50, 0.1);
+  border: 1px solid #fbd77d;
+  color: #fbd77d;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* Flatpickr Özelleştirmesi */
+.flatpickr-day {
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.flatpickr-day:hover {
+  background: #c08f32 !important;
+  color: #fff !important;
+}
+
+.flatpickr-day.disabled-day {
+  background: #e0e0e0 !important;
+  color: #aaa !important;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+/* Kullanıcı Bilgileri */
+#user-info {
+  font-size: 1.1rem;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #fbd77d;
+  background-color: rgba(251, 215, 125, 0.9);
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.info-box {
+  background-color: rgba(251, 215, 125, 0.95);
+  border: 1px solid #c08f32;
+  border-radius: 8px;
+  padding: 5px;
+  color: #333;
+  text-align: left;
+  width: 150px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+  .container, .login-container, .map-container, .profile-container, .reservation-container, .user-container {
+      padding: 15px;
+  }
+
+  h1 {
+      font-size: 2rem;
+  }
+
+  h3 {
+      font-size: 1.5rem;
+  }
+
+
+} 
+
