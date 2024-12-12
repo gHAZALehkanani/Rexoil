@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const notification = document.getElementById('notification');
             if (response.ok) {
                 notification.textContent = result.message;
-                notification.style.color = 'green';
+                notification.style.color = 'brown';
             } else {
                 notification.textContent = result.message || 'Bir hata oluştu.';
                 notification.style.color = 'red';
