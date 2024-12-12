@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const db = require('./db');
 const session = require('express-session');
+const nodemailer = require('nodemailer');
 
 // Express uygulamasına session middleware'i ekleyin
 app.use(session({
@@ -169,6 +170,49 @@ app.post('/api/reservation', (req, res) => {
                 res.json({ message: 'Rezervasyon başarıyla kaydedildi.' });
             }
         );
+    });
+});
+
+
+// Kullanıcının rezervasyonlarını döndür
+app.get('/api/user/reservations', (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ message: 'Oturum açmanız gerekiyor.' });
+    }
+
+    const personelId = req.session.user.personel_id;
+
+    const query = `
+        SELECT 
+            r.giris_tarihi, 
+            r.cikis_tarihi, 
+            o.otel_adi AS hotelName,
+            o.lat AS hotelLat,
+            o.lng AS hotelLng,
+            (SELECT satis_nokta_adi 
+             FROM satis_noktalari 
+             ORDER BY ST_Distance_Sphere(POINT(satis_noktalari.lng, satis_noktalari.lat), POINT(o.lng, o.lat)) 
+             LIMIT 1) AS nearestSalesPoint,
+            (SELECT restoran_adi 
+             FROM restoranlar 
+             ORDER BY ST_Distance_Sphere(POINT(restoranlar.lng, restoranlar.lat), POINT(o.lng, o.lat)) 
+             LIMIT 1) AS nearestRestaurant,
+            (SELECT akaryakit_ist_adi 
+             FROM akaryakit_ist 
+             ORDER BY ST_Distance_Sphere(POINT(akaryakit_ist.lng, akaryakit_ist.lat), POINT(o.lng, o.lat)) 
+             LIMIT 1) AS nearestGasStation
+        FROM rezervasyon r
+        JOIN oteller o ON r.otel_id = o.otel_id
+        WHERE r.personel_id = ?
+    `;
+
+    db.query(query, [personelId], (err, results) => {
+        if (err) {
+            console.error('Veri çekme hatası:', err);
+            return res.status(500).json({ message: 'Rezervasyon bilgileri alınamadı.' });
+        }
+
+        res.json(results);
     });
 });
 
