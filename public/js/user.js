@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const userInfoDiv = document.getElementById('user-info');
+    const reservationsDiv = document.getElementById('reservations');
 
     // Kullanıcı bilgilerini API'den çek ve ekrana yazdır
     fetch('/api/user')
@@ -14,6 +15,32 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             userInfoDiv.innerHTML = `<p>Bilgiler yüklenemedi. Hata: ${error.message}</p>`;
         });
+
+    // Kullanıcının rezervasyonlarını çek ve ekrana yazdır
+    fetch('/api/user/reservations')
+        .then(response => response.json())
+        .then(reservations => {
+            if (reservations.length === 0) {
+                reservationsDiv.innerHTML = '<p>Rezervasyon bulunamadı.</p>';
+            } else {
+                reservationsDiv.innerHTML = '<ul>';
+                reservations.forEach(reservation => {
+                    reservationsDiv.innerHTML += `<li><p><strong>Otel:</strong> ${reservation.hotelName}</p>
+                            <p><strong>Giriş Tarihi:</strong> ${reservation.giris_tarihi}</p>
+                            <p><strong>Çıkış Tarihi:</strong> ${reservation.cikis_tarihi}</p>
+                            <h3>Otele En Yakın Noktalar:</h3>
+                            <ul>
+                                <li><strong>Satış Noktası:</strong> ${reservation.nearestSalesPoint}</li>
+                                <li><strong>Restoran:</strong> ${reservation.nearestRestaurant}</li>
+                                <li><strong>Akaryakıt İstasyonu:</strong> ${reservation.nearestGasStation}</li>
+                            </ul>
+                        </li>
+                    `;
+                });
+                reservationsDiv.innerHTML += '</ul>';
+            }
+        })
+        .catch(error => {
+            reservationsDiv.innerHTML = `<p>Rezervasyon bilgileri yüklenemedi. Hata: ${error.message}</p>`;
+        });
 });
-
-
