@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const turkeyBounds = [
-        [35.808593, 25.078125],  // Güney Batı
-        [42.256041, 44.820313]   // Kuzey Doğu
+        [33.00,23.00],  // Güney Batı
+        [44.0, 47.0]   // Kuzey Doğu
     ];
     map.setMaxBounds(turkeyBounds);
 
