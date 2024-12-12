@@ -1,21 +1,21 @@
-/* Genel Stil */
 body {
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
+    background: linear-gradient(to right, #fbd77d, #c08f32);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #f5c56a, #fbd77d, #edd9a3); /* Modern gradient arka plan */
-    font-family: 'Roboto', Arial, sans-serif; /* Modern bir yazı tipi */
-    color: #333;
+    min-height: 100vh;
+    color: #fff;
+    position: relative; /* Alt sağ köşe için gerekli */
 }
 
 /* Harita Kapsayıcısı */
 .map-container {
     position: relative;
     width: 90%;
-    height: 85vh; /* Yükseklik azaltıldı */
+    height: 80vh; /* Yükseklik azaltıldı */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,18 +35,19 @@ body {
     overflow: hidden;
 }
 
+
+
 /* Bilgi Kutusu */
 .info-box {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 180px; /* Daha kompakt genişlik */
+    bottom: 15px;
+    right: 15px;
+    width: 165px; /* Daha kompakt genişlik */
     background: rgba(251, 215, 125, 0.95); /* Altın tonlu arka plan */
-    padding: 10px; /* İçerik için boşluk */
+    padding: 5px; /* İçerik için boşluk */
     border-radius: 10px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Daha belirgin gölge */
     font-size: 14px;
-    line-height: 1.4; /* Daha okunaklı metin */
     color: #333; /* Metin rengi */
     z-index: 1000; /* Haritanın üstünde */
     transition: all 0.3s ease; /* Animasyonlu hover efekti */
@@ -75,10 +76,10 @@ body {
 
 /* Leaflet Popup Stil */
 .leaflet-popup {
-    background-color: rgba(255, 255, 255, 0.95); /* Hafif şeffaf beyaz arka plan */
-    border: 2px solid #c08f32; /* Altın tonlu çerçeve */
+    background-color: rgba(255, 255, 255, 0); /* Hafif şeffaf beyaz arka plan */
+
     border-radius: 12px; /* Yuvarlatılmış köşeler */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Modern gölge efekti */
+   
     font-family: 'Roboto', Arial, sans-serif; /* Modern yazı tipi */
     font-size: 14px; /* Daha okunaklı boyut */
     color: #333; /* Metin rengi */
@@ -132,6 +133,7 @@ body {
     border: none; /* Çerçeve yok */
     color: #fff; /* Beyaz metin */
     font-size: 14px; /* Boyut */
+    margin: 10px;
     border-radius: 50%; /* Yuvarlak buton */
     width: 25px;
     height: 25px;
@@ -140,13 +142,61 @@ body {
     cursor: pointer;
     transition: background 0.3s ease;
     position: absolute;
-    top: 5px;
-    right: 5px;
 }
 
 .leaflet-popup-close-button:hover {
     background: #fbd77d; /* Hover sırasında açık altın tonları */
     color: #333; /* Daha belirgin metin */
+}
+
+button {
+    background: linear-gradient(135deg, #f5c56a, #c08f32);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #c08f32, #f5c56a);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+
+button:active {
+    background: #a07029;
+    transform: scale(0.95);
+}
+
+
+button.fixed-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: linear-gradient(135deg, #f5c56a, #c08f32);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button.fixed-button:hover {
+    background: linear-gradient(135deg, #c08f32, #f5c56a);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+
+button.fixed-button:active {
+    background: #a07029;
+    transform: scale(0.95);
 }
 
 /* Mobil Uyum */
