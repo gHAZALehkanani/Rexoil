@@ -1,0 +1,108 @@
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background:url('../img/bg.jpg');
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .user-container {
+        background-color: rgba(192, 143, 50, 0.9);
+        padding: 25px 35px;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        width: 90%; /* Genişliği %90 yap */
+        height: 90%; /* Yüksekliği %90 yap */
+        max-width: none; /* Maksimum genişlik sınırlamasını kaldır */
+        max-height: none; /* Maksimum yükseklik sınırlamasını kaldır */
+        color: #fff;
+    }
+
+    h1 {
+        color: #fbd77d;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    #user-info, #reservations {
+        background: rgba(255, 215, 125, 0.9);
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        color: #333;
+        text-align: left;
+    }
+
+    h2 {
+        color: #fbd77d;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    p {
+        margin: 0 0 10px;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    button {
+        background: linear-gradient(135deg, #fbd77d, #c08f32);
+        color: #333;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+        background: linear-gradient(135deg, #c08f32, #fbd77d);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+        transform: scale(1.05);
+    }
+
+    button:active {
+        background: #a07029;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transform: scale(0.95);
+    }
+
+
+
+    
+    /* Media Query for Smaller Screens */
+    @media (max-width: 768px) {
+        .user-container {
+            padding: 15px 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+    }
+
