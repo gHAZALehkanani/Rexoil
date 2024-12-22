@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "2024-12-27"
     ];
 
-    // Çıkış için seçilemeyecek tarihler
+    
     const disabledCheckOutDates = [
         "2024-12-18",
         "2024-12-23",
@@ -82,11 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Bildirim mesajı
             const notification = document.getElementById('notification');
             if (response.ok) {
-                notification.textContent = result.message;
-                notification.style.color = 'brown';
+                // Modal içeriğini güncelle
+                document.getElementById('modalMessage').textContent = `${hotelName} otelinde rezervasyonunuz yapılmıştır`;
+            
+                // Modalı görünür yap
+                document.getElementById('overlay').classList.add('show');
             } else {
                 notification.textContent = result.message || 'Bir hata oluştu.';
                 notification.style.color = 'red';
+                notification.style.display = 'block';
             }
             notification.style.display = 'block';
 
@@ -98,3 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.getElementById('goToMap').addEventListener('click', () => {
+    // /map sayfasına yönlendirme
+    window.location.href = '/map';
+});
+
