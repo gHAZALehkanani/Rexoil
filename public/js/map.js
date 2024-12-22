@@ -3,17 +3,17 @@ document.addEventListener('DOMContentLoaded', () => {
         center: [39.92077, 32.85411], // Türkiye koordinatları
         zoom: 6,
         minZoom: 5,
-        maxZoom: 10
+        maxZoom: 22
     });
 
     const turkeyBounds = [
-        [33.00,23.00],  // Güney Batı
-        [44.0, 47.0]   // Kuzey Doğu
+        [35.808593, 25.078125],  // Güney Batı
+        [42.256041, 44.820313]   // Kuzey Doğu
     ];
     map.setMaxBounds(turkeyBounds);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
+        maxZoom: 22,
     }).addTo(map);
 
     const markerIcons = {
