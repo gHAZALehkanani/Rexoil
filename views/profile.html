@@ -3,16 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil</title>
+    <title>Otel Rezervasyonu</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+
+
 </head>
 <body>
-    <div class="profile-container">
-        <h1 id="welcome-message">Hoş Geldiniz</h1>
-        <button onclick="window.location.href='/map'">Harita</button>
-        <button onclick="window.location.href='/user'">Profilim</button>
-    </div>
+    <div class="reservation-container">
+        <h1>Otel Rezervasyonu</h1>
+        <form id="reservation-form">
+            <label for="hotel-name">Otel Adı:</label>
+            <input type="text" id="hotel-name" name="hotel-name" readonly>
+        
+            <label for="check-in">Giriş Tarihi:</label>
+            <input type="text" id="check-in" name="check-in" required> <!-- Flatpickr tarafından yönetiliyor -->
+        
+            <label for="check-out">Çıkış Tarihi:</label>
+            <input type="text" id="check-out" name="check-out" required> <!-- Flatpickr tarafından yönetiliyor -->
+        
+            <button type="submit">Rezervasyon Yap</button>
+        </form>
+        <div id="overlay" class="overlay">
+            <div class="modal">
+                <p id="modalMessage"></p>
+                <button id="goToMap">Haritaya Git</button>
+            </div>
+        </div>
+        
 
-    <script src="/js/profile.js"></script>
+        <!-- Bildirim Alanı -->
+        <div id="notification" style="display: none; margin-top: 20px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9; color: #333;"></div>
+    </div>
+    <script src="/js/reservation.js"></script>
 </body>
 </html>
