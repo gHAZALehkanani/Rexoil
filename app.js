@@ -217,6 +217,36 @@ app.get('/api/user/reservations', (req, res) => {
 });
 
 
+//  endpoint: E-postayı gönderir
+app.post('/api/sendEmail', (req, res) => {
+    const { hotelName, checkIn, checkOut, personelEmail } = req.body;
+
+    // Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'raspberrypiybs2023@gmail.com',
+            pass: 'mdkh kpke ihnq gdvx' // Gmail uygulama şifresi
+        }
+    });
+
+    const mailOptions = {
+        from: 'raspberrypiybs2023@gmail.com',
+        to: personelEmail,
+        subject: `Yeni Rezervasyon - ${hotelName}`,
+        text: `Merhaba,\n\n${hotelName} için ${checkIn} - ${checkOut} tarihleri arasında yeni bir rezervasyon yapıldı.`
+    };
+
+    transporter.sendMail(mailOptions, (emailErr, info) => {
+        if (emailErr) {
+            console.error('E-posta gönderim hatası:', emailErr);
+            return res.status(500).json({ message: 'E-posta gönderilemedi.' });
+        }
+
+        res.json({ message: 'E-posta başarıyla gönderildi.' });
+    });
+});
+
 
 
 
