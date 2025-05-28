@@ -1,8 +1,5 @@
-sql bağlantısı olduğundan data dosyasına gerek kalmayacak
-
-
-css kodları css dosyası içinde olmalı 
-public dosyasında js ve css diye iki dosya olmalı
+PROJENİN AMACI
+Rexoil’in Türkiye genelinde 10 ilde madeni yağ satışını sürdüren satış ekibinin güçlü operasyonel desteğini daha etkin hale getirmeyi hedeflemektedir.
 
 Proje sunum dosyası
 https://www.canva.com/design/DAGZ7tJdr6Y/YCYrnRfbKXLDKriaDQBmvw/edit?utm_content=DAGZ7tJdr6Y&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
