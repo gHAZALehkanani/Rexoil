@@ -3,80 +3,285 @@ body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #f5c56a, #fbd77d, #edd9a3);
-  background:url('../img/bg.jpg');
-  color: #f5f5f5;
+  background: linear-gradient(135deg, #ffffff, #f8f8f8, #e0e0e0);
+  color: #333;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
 }
 
-.container, .login-container, .map-container, .profile-container, .reservation-container, .user-container {
-  background-color: rgba(192, 143, 50, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  padding: 20px;
-  max-width: 500px;
-  width: 90%;
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23654621" opacity="0.08"/></svg>') repeat;
+  pointer-events: none;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  padding: 50px;
+  max-width: none;
+  width: 100%;
   text-align: center;
-  color: #f5f5f5;
+  animation: fadeIn 1s ease-in-out;
+  color: #333;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(101, 70, 33, 0.15), transparent);
+  animation: shimmer 3s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(101, 70, 33, 0.5);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* Başlıklar */
 h1 {
-  color: #fbd77d;
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  font-weight: bold;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  color: #654321;
+  font-size: 2.8rem;
+  margin-bottom: 35px;
+  font-weight: 800;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  letter-spacing: 1px;
 }
 
-h3 {
-  color: #fbd77d;
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  font-weight: bold;
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #654321, #8b6914);
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(101, 70, 33, 0.3);
 }
 
 /* Form Elemanları */
-input, button, select, textarea {
+input {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #fbd77d;
-  border-radius: 6px;
-  font-size: 1rem;
+  padding: 18px 25px;
+  margin: 18px 0;
+  border: 2px solid rgba(101, 70, 33, 0.5);
+  border-radius: 12px;
+  font-size: 1.1rem;
   box-sizing: border-box;
-  background: rgba(255, 215, 125, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   color: #333;
+  transition: all 0.4s ease;
+  position: relative;
+  backdrop-filter: blur(5px);
 }
 
-input:focus, button:focus, select:focus, textarea:focus {
+input:focus {
   outline: none;
-  border-color: #fbd77d;
-  box-shadow: 0 0 5px rgba(251, 215, 125, 0.5);
+  border-color: #654321;
+  box-shadow: 0 0 0 4px rgba(101, 70, 33, 0.25), 0 5px 15px rgba(101, 70, 33, 0.15);
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 1);
+}
+
+input::placeholder {
+  color: rgba(51, 51, 51, 0.6);
+  font-style: italic;
+  font-weight: 300;
 }
 
 button {
-  background: #fbd77d;
-  color: #333;
+  width: 100%;
+  padding: 18px;
+  margin-top: 25px;
   border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #654321, #8b6914);
+  color: #fff;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.4s ease;
+  box-shadow: 0 6px 20px rgba(101, 70, 33, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
 
 button:hover {
-  background: #c08f32;
-  color: #fff;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(101, 70, 33, 0.5);
+}
+
+button:hover::before {
+  left: 100%;
 }
 
 button:active {
-  background: #a07029;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(101, 70, 33, 0.3);
 }
 
-/* Harita Sayfası */
-.map-container {
+/* User Page Specific Styles */
+#user-info, #reservations {
+  margin: 20px 0;
+  text-align: left;
+  width: 100%;
+}
+
+#user-info p {
+  margin: 15px 0;
+  font-size: 1.1rem;
+  color: #333;
+  background: rgba(101, 70, 33, 0.05);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border-left: 4px solid #654321;
+}
+
+#reservations h2 {
+  color: #654321;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+#reservations ul {
+  list-style: none;
+  padding: 0;
+}
+
+#reservations li {
+  background: rgba(101, 70, 33, 0.05);
+  border: 1px solid rgba(101, 70, 33, 0.2);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+#reservations li p {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+#reservations li ul {
+  margin-top: 10px;
+}
+
+#reservations li ul li {
+  background: none;
+  border: none;
+  padding: 5px 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+/* Map Page Specific Styles (legacy - renamed to avoid conflicts with map.css) */
+.legacy-map {
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  margin: 20px 0;
+  border: 2px solid rgba(101, 70, 33, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h1 {
+  font-size: 2rem;
+}
+
+.info-box {
+  background: rgba(101, 70, 33, 0.05);
+  border: 1px solid rgba(101, 70, 33, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.info-box h3 {
+  color: #654321;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.category-checkbox {
+  margin: 10px 0;
+  accent-color: #654321;
+}
+
+.category-checkbox + label {
+  margin-left: 8px;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 40px 25px;
+    margin: 20px;
+    border-radius: 20px;
+  }
+  h1 {
+    font-size: 2.2rem;
+  }
+  .logo {
+    width: 100px;
+  }
+}
+
+/* Harita Sayfası (legacy - renamed to avoid conflicts with map.css) */
+.legacy-map-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,7 +293,7 @@ button:active {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-#map {
+.legacy-map {
   width: 100%;
   height: 400px;
   border-radius: 12px;
@@ -96,7 +301,7 @@ button:active {
   border: 2px solid #fbd77d;
 }
 
-.info-box {
+.legacy-map-container .info-box {
   background-color: rgba(251, 215, 125, 0.95);
   border: 1px solid #c08f32;
   border-radius: 8px;
@@ -111,7 +316,7 @@ button:active {
   z-index: 1000;
 }
 
-.info-box label {
+.legacy-map-container .info-box label {
   display: block;
   margin-bottom: 10px;
   font-size: 0.9rem;

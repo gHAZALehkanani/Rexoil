@@ -25,9 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 reservationsDiv.innerHTML = '<ul>';
                 reservations.forEach(reservation => {
+                    const girisTarihi = new Date(reservation.giris_tarihi).toLocaleDateString('tr-TR');
+                    const cikisTarihi = new Date(reservation.cikis_tarihi).toLocaleDateString('tr-TR');
                     reservationsDiv.innerHTML += `<li><p><strong>Otel:</strong> ${reservation.hotelName}</p>
-                            <p><strong>Giriş Tarihi:</strong> ${reservation.giris_tarihi}</p>
-                            <p><strong>Çıkış Tarihi:</strong> ${reservation.cikis_tarihi}</p>
+                            <p><strong>Giriş Tarihi:</strong> ${girisTarihi}</p>
+                            <p><strong>Çıkış Tarihi:</strong> ${cikisTarihi}</p>
                             <h3>Otele En Yakın Noktalar:</h3>
                             <ul>
                                 <li><strong>Satış Noktası:</strong> ${reservation.nearestSalesPoint}</li>

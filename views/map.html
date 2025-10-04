@@ -4,23 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harita</title>
-    <link rel="stylesheet" href="/map.css">
+    <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/map.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
-    <div class="map-container">
-        <div id="map"></div>
-        <div class="info-box">
-            <h3>Kategoriler</h3>
-            <label><input type="checkbox" class="category-checkbox" value="satis_noktalari" checked> Satış İstasyonları</label><br>
-            <label><input type="checkbox" class="category-checkbox" value="oteller" checked> Oteller</label><br>
-            <label><input type="checkbox" class="category-checkbox" value="akaryakit_ist" checked> Akaryakıt İstasyonları</label><br>
-            <label><input type="checkbox" class="category-checkbox" value="restoranlar" checked> Restoranlar</label><br>
+    <div class="login-container map-page">
+        <img src="/img/logo.png" alt="Rexoil Logo" class="logo">
+        <h1>Harita</h1>
+
+        <div class="map-container layout-row">
+            <div class="map-wrap">
+                <div id="map"></div>
+            </div>
+
+            <aside class="info-box sidebar" aria-label="Kategoriler">
+                <h3>Kategoriler</h3>
+                <div class="categories">
+                    <label class="category-item"><input type="checkbox" class="category-checkbox" value="satis_noktalari" checked><span class="label-text">Satış İstasyonları</span></label>
+                    <label class="category-item"><input type="checkbox" class="category-checkbox" value="oteller" checked><span class="label-text">Oteller</span></label>
+                    <label class="category-item"><input type="checkbox" class="category-checkbox" value="akaryakit_ist" checked><span class="label-text">Akaryakıt İstasyonları</span></label>
+                    <label class="category-item"><input type="checkbox" class="category-checkbox" value="restoranlar" checked><span class="label-text">Restoranlar</span></label>
+                </div>
+            </aside>
         </div>
 
+        <!-- small circular back button -->
+        <button class="back-button" title="Geri" onclick="window.history.back()" aria-label="Geri">←</button>
     </div>
-    <button class="fixed-button" onclick="window.location.href='/profile'">Anasayfa</button>
     <script src="/js/map.js"></script>
 </body>
 </html>

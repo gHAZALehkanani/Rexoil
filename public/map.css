@@ -11,14 +11,29 @@ body {
     position: relative; /* Alt sağ köşe için gerekli */
 }
 
+.map-page {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 30px;
+}
+
+.map-page .logo {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.map-page h1 {
+    color: #654321;
+    margin: 10px 0 20px 0;
+    font-size: 2.2rem;
+}
+
 /* Harita Kapsayıcısı */
 .map-container {
     position: relative;
-    width: 90%;
-    height: 80vh; /* Yükseklik azaltıldı */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+    height: 70vh; /* map height */
+    display: block;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Hafif gölge */
     background: rgba(255, 255, 255, 0.8); /* Haritanın dış kısmına şeffaf beyaz arka plan */
@@ -37,26 +52,42 @@ body {
 
 
 
-/* Bilgi Kutusu */
-.info-box {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    width: 165px; /* Daha kompakt genişlik */
-    background: rgba(251, 215, 125, 0.95); /* Altın tonlu arka plan */
-    padding: 5px; /* İçerik için boşluk */
+/* Bilgi Kutusu (sidebar) */
+.map-container.layout-row{
+    display: flex;
+    gap: 18px;
+    align-items: stretch;
+}
+
+.map-container .map-wrap{
+    flex: 1 1 auto;
+    min-width: 300px;
+}
+
+.map-container .map-wrap #map{
+    width: 100%;
+    height: 100%;
+}
+
+.info-box.sidebar {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    width: 200px; /* reduced sidebar width */
+    background: linear-gradient(180deg, rgba(251,215,125,0.98), rgba(240,195,90,0.98));
+    padding: 12px; /* reduced padding */
     border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Daha belirgin gölge */
-    font-size: 14px;
-    color: #333; /* Metin rengi */
-    z-index: 1000; /* Haritanın üstünde */
-    transition: all 0.3s ease; /* Animasyonlu hover efekti */
+    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    font-size: 15px;
+    color: #3c2a0f;
+    z-index: 1000;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Bilgi Kutusu Hover Efekti */
 .info-box:hover {
-    transform: translateY(-5px); /* Hover sırasında hafif yukarı hareket */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px); /* Hover sırasında hafif yukarı hareket */
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
 }
 
 /* Kategori Etiketleri */
@@ -70,9 +101,92 @@ body {
 }
 
 .category-checkbox {
-    margin-right: 8px;
-    accent-color: #c08f32; /* Checkbox için altın rengi */
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    accent-color: #7a4f13; /* Checkbox için daha koyu altın rengi */
 }
+
+.categories{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+
+.category-item{
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    column-gap: 12px;
+    align-items: center;
+    padding: 6px 6px;
+    border-radius: 6px;
+    transition: background 0.12s ease;
+    margin: 0; /* override older label margins */
+}
+
+.category-item:hover{
+    background: rgba(0,0,0,0.03);
+}
+
+.label-text{
+    font-size: 1rem;
+    color: #4b3318;
+    display: inline-block;
+    text-align: left;
+}
+
+/* Ensure no extra margins from other .info-box label rules */
+.info-box.sidebar .category-item + .category-item { margin-top: 8px; }
+
+/* CTA button wrap */
+.cta-wrap{
+    display:flex;
+    justify-content:center;
+    margin-top: 18px;
+}
+
+.cta-button{
+    width: 60%;
+    max-width: 420px;
+    padding: 14px 28px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    border-radius: 10px;
+    background: linear-gradient(90deg,#c08f32,#f5c56a);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(160,110,40,0.25);
+    border: none;
+}
+
+.cta-button:hover{
+    transform: translateY(-3px);
+}
+
+/* Back button */
+.back-button{
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(180deg, #ffffff, #f0e6d7);
+    color: #6b4a1f;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    cursor: pointer;
+}
+
+.back-button:hover{ transform: translateY(-2px); }
+
+/* Hide legacy CTA if present */
+.cta-wrap { display: none !important; }
 
 /* Leaflet Popup Stil */
 .leaflet-popup {
@@ -201,23 +315,15 @@ button.fixed-button:active {
 
 /* Mobil Uyum */
 @media (max-width: 768px) {
-    .map-container {
-        width: 100%;
-        height: 70vh;
-        padding: 5px;
+    .map-container.layout-row{
+        flex-direction: column;
+        height: auto;
+        gap: 12px;
     }
 
-    #map {
-        height: 90%;
-    }
+    .map-container .map-wrap{ height: 50vh; }
 
-    .info-box {
-        width: 150px; /* Daha küçük bilgi kutusu */
-        bottom: 15px;
-        right: 15px;
-        font-size: 12px;
-        padding: 8px;
-    }
+    .info-box.sidebar{ width: 100%; }
 
     .leaflet-popup-content {
         font-size: 12px;
