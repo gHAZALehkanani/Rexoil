@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <div class="profile-container">
@@ -13,6 +13,15 @@
         <button onclick="window.location.href='/user'">Profilim</button>
     </div>
 
-    <script src="/js/profile.js"></script>
+    <script>
+        fetch('/api/user')
+            .then(response => response.json())
+            .then(data => {
+                if (data.ad && data.soyad) {
+                    document.getElementById('welcome-message').textContent = `Hoş Geldiniz, ${data.ad} ${data.soyad}`;
+                }
+            })
+            .catch(error => console.error('Kullanıcı bilgileri alınamadı:', error));
+    </script>
 </body>
 </html>

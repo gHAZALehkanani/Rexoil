@@ -80,19 +80,6 @@ app.get('/api/user', (req, res) => {
 
 
 
-// Profile sayfası
-app.get('/profile', (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).json({ message: 'Giriş yapmanız gerekiyor.' });
-    }
-
-    // Kullanıcı bilgilerini döndürün veya bir HTML sayfasında göstermek için kullanın
-    res.json({ user: req.session.user });
-});
-
-
-
-
 // Lokasyon verilerini döndürme
 app.get('/api/locations', (req, res) => {
     const queries = {
