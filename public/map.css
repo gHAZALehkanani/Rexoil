@@ -114,6 +114,88 @@ body {
     margin-top: 10px;
 }
 
+#city-filter{
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 8px 6px;
+    background: rgba(255,255,255,0.95);
+    color: #3c2a0f;
+    font-size: 0.95rem;
+}
+
+#city-filter option{
+    padding: 6px;
+}
+
+/* Custom city picker */
+.city-picker{ width:100%; }
+.city-picker #city-search{
+    width:100%;
+    padding:8px 10px;
+    border-radius:6px;
+    border:1px solid rgba(0,0,0,0.08);
+    margin-bottom:8px;
+    box-sizing:border-box;
+}
+.city-list{
+    max-height:160px;
+    overflow:auto;
+    border-radius:6px;
+    border:1px solid rgba(0,0,0,0.06);
+    background: rgba(255,255,255,0.98);
+}
+.city-row{
+    display:flex;
+    align-items:center;
+    padding:8px 10px;
+    gap:10px;
+    font-size:0.95rem;
+    color:#3c2a0f;
+}
+.city-row input[type="checkbox"]{ width:16px; height:16px; }
+.city-row:hover{ background: rgba(0,0,0,0.02); }
+
+/* Dropdown filter styles inside map */
+.map-wrap{ position: relative; }
+
+/* Top filter bar that sits above the map and spans content area */
+.top-filter-bar{
+    width: 100%;
+    display:flex;
+    justify-content:flex-start;
+    padding-bottom:10px;
+}
+.top-filter-bar .filter-dropdown{ position: relative; margin-left:10px; z-index:1100; }
+.filter-toggle{
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.filter-panel{
+    display:none;
+    position: absolute;
+    top: 42px;
+    left: 0;
+    width: 320px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+.filter-panel.open{ display:block; }
+.small-btn{
+    background: #f3e0bf;
+    border:1px solid rgba(0,0,0,0.06);
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
 
 .category-item{
     display: grid;

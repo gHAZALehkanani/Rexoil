@@ -82,33 +82,48 @@ app.get('/api/user', (req, res) => {
 
 // Lokasyon verilerini döndürme
 app.get('/api/locations', (req, res) => {
-    const queries = {
-        oteller: `SELECT otel_adi AS name, lat, lng FROM oteller`,
-        satis_noktalari: `SELECT satis_nokta_adi AS name, lat, lng FROM satis_noktalari`,
-        akaryakit_ist: `SELECT akaryakit_ist_adi AS name, lat, lng FROM akaryakit_ist`,
-        restoranlar: `SELECT restoran_adi AS name, lat, lng FROM restoranlar`
+    const tableMap = {
+        oteller: { nameCol: 'otel_adi' },
+        satis_noktalari: { nameCol: 'satis_nokta_adi' },
+        akaryakit_ist: { nameCol: 'akaryakit_ist_adi' },
+        restoranlar: { nameCol: 'restoran_adi' }
     };
 
     const results = {};
+    const categories = Object.keys(tableMap);
+    let completed = 0;
 
-    let completedQueries = 0;
-    const totalQueries = Object.keys(queries).length;
+    categories.forEach(category => {
+        const tableName = category;
+        // Always join with sehirler table to get city name
+        const sel = `SELECT ${tableMap[category].nameCol} AS name, t.lat, t.lng, s.sehir_adi AS city FROM ${tableName} t JOIN sehirler s ON t.sehir_id = s.sehir_id`;
 
-    Object.keys(queries).forEach(category => {
-        db.query(queries[category], (err, rows) => {
+        db.query(sel, (err, rows) => {
             if (err) {
                 console.error(`Error querying ${category}:`, err);
-                results[category] = []; // Hata durumunda bu kategoriyi boş bırak
+                results[category] = [];
             } else {
                 results[category] = rows;
             }
 
-            completedQueries++;
-            if (completedQueries === totalQueries) {
-                // Tüm sorgular tamamlandığında yanıtı gönder
+            completed++;
+            if (completed === categories.length) {
                 res.json(results);
             }
         });
+    });
+});
+
+// Provide list of cities from sehirler table for client filters
+app.get('/api/sehirler', (req, res) => {
+    const sql = `SELECT sehir_adi FROM sehirler ORDER BY sehir_adi`;
+    db.query(sql, (err, rows) => {
+        if (err) {
+            console.error('Error fetching sehirler:', err);
+            return res.status(500).json([]);
+        }
+        const cities = rows.map(r => r.sehir_adi);
+        res.json(cities);
     });
 });
 

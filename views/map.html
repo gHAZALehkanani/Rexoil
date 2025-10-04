@@ -15,6 +15,21 @@
         <img src="/img/logo.png" alt="Rexoil Logo" class="logo">
         <h1>Harita</h1>
 
+        <!-- top filter bar -->
+        <div class="top-filter-bar">
+            <div class="filter-dropdown">
+                <button class="filter-toggle" aria-haspopup="true" aria-expanded="false">Şehirler ▾</button>
+                <div class="filter-panel" role="dialog" aria-label="Şehir filtreleri">
+                    <input type="text" id="city-search" placeholder="Şehir ara..." aria-label="Şehir ara" />
+                    <div class="city-list" id="city-list" role="listbox" aria-label="Şehir listesi"></div>
+                    <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:8px;">
+                        <button id="select-all-cities" class="small-btn">Tümünü Seç</button>
+                        <button id="clear-cities" class="small-btn">Temizle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="map-container layout-row">
             <div class="map-wrap">
                 <div id="map"></div>
@@ -28,6 +43,7 @@
                     <label class="category-item"><input type="checkbox" class="category-checkbox" value="akaryakit_ist" checked><span class="label-text">Akaryakıt İstasyonları</span></label>
                     <label class="category-item"><input type="checkbox" class="category-checkbox" value="restoranlar" checked><span class="label-text">Restoranlar</span></label>
                 </div>
+                <!-- city filter moved to top of screen -->
             </aside>
         </div>
 

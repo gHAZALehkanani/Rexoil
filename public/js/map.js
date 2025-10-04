@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const markers = {}; // Marker'ları kategorilere göre saklayacağız
+    const allMarkers = []; // flat list with metadata {marker, category, city}
 
     // Verileri fetch ile çek ve haritaya ekle
     fetch('/api/locations')
@@ -32,12 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(data => {
+            // collect cities
+            const citySet = new Set();
+
             Object.keys(data).forEach(category => {
                 const iconUrl = markerIcons[category];
                 markers[category] = [];
 
                 data[category].forEach(location => {
                     if (!location.lat || !location.lng) return;
+                    const city = location.city || location.sehir || location.il || location.il_adi || null;
+                    if (city) citySet.add(city);
 
                     let popupContent;
 
@@ -70,10 +76,93 @@ document.addEventListener('DOMContentLoaded', () => {
                     const marker = L.marker([location.lat, location.lng], { icon: markerIcon });
                     marker.bindPopup(popupContent);
 
+                    // store metadata
+                    const meta = { marker, category, city };
+                    allMarkers.push(meta);
+
                     markers[category].push(marker);
                     marker.addTo(map);
                 });
             });
+
+            // populate custom city picker (dropdown now placed above the map)
+            const cityListEl = document.getElementById('city-list');
+            const citySearch = document.getElementById('city-search');
+            const filterToggle = document.querySelector('.filter-toggle');
+            const filterPanel = document.querySelector('.filter-panel');
+            const selectAllBtn = document.getElementById('select-all-cities');
+            const clearBtn = document.getElementById('clear-cities');
+            const populateCities = (citiesArr) => {
+                if (!cityListEl) return;
+                cityListEl.innerHTML = '';
+                const cities = citiesArr.sort((a,b) => a.localeCompare(b, 'tr'));
+                cities.forEach(c => {
+                    const safeId = 'city-' + c.replace(/[^a-z0-9_-]/gi, '_');
+                    const row = document.createElement('div');
+                    row.className = 'city-row';
+                    row.innerHTML = `<input type="checkbox" class="city-checkbox" value="${c}" id="${safeId}"><label for="${safeId}">${c}</label>`;
+                    cityListEl.appendChild(row);
+                });
+            };
+
+            // Try to fetch cities from server; fall back to derived citySet
+            fetch('/api/sehirler')
+                .then(resp => resp.ok ? resp.json() : Promise.reject())
+                .then(citiesFromServer => {
+                    if (Array.isArray(citiesFromServer) && citiesFromServer.length > 0) populateCities(citiesFromServer);
+                    else populateCities(Array.from(citySet));
+                })
+                .catch(() => {
+                    populateCities(Array.from(citySet));
+                });
+
+            if (cityListEl) {
+                // wire city checkbox change
+                cityListEl.addEventListener('change', (e) => {
+                    if (e.target && e.target.classList.contains('city-checkbox')) applyFilters();
+                });
+
+                // dropdown toggle
+                if (filterToggle && filterPanel) {
+                    filterToggle.addEventListener('click', () => {
+                        const open = filterPanel.classList.toggle('open');
+                        filterToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                    });
+
+                    // click outside to close
+                    document.addEventListener('click', (ev) => {
+                        if (!filterPanel.contains(ev.target) && !filterToggle.contains(ev.target)) {
+                            filterPanel.classList.remove('open');
+                            filterToggle.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                }
+
+                if (selectAllBtn) {
+                    selectAllBtn.addEventListener('click', () => {
+                        cityListEl.querySelectorAll('.city-checkbox').forEach(cb => cb.checked = true);
+                        applyFilters();
+                    });
+                }
+
+                if (clearBtn) {
+                    clearBtn.addEventListener('click', () => {
+                        cityListEl.querySelectorAll('.city-checkbox').forEach(cb => cb.checked = false);
+                        applyFilters();
+                    });
+                }
+
+                // search filter
+                if (citySearch) {
+                    citySearch.addEventListener('input', () => {
+                        const q = citySearch.value.trim().toLowerCase();
+                        Array.from(cityListEl.children).forEach(row => {
+                            const label = row.querySelector('label').textContent.toLowerCase();
+                            row.style.display = label.includes(q) ? 'flex' : 'none';
+                        });
+                    });
+                }
+            }
         })
         .catch(error => {
             console.error('Hata:', error.message);
@@ -124,13 +213,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Kategori checkbox'larını yönet
     document.querySelectorAll('.category-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', () => {
-            const category = checkbox.value;
-            if (checkbox.checked) {
-                markers[category]?.forEach(marker => marker.addTo(map));
-            } else {
-                markers[category]?.forEach(marker => map.removeLayer(marker));
-            }
+            // re-apply combined filters when categories change
+            applyFilters();
         });
     });
+    
+    // helper to apply category + city filters
+    function applyFilters() {
+        const selectedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked')).map(c => c.value);
+        const selectedCities = Array.from(document.querySelectorAll('.city-checkbox:checked')).map(c => c.value);
+
+        allMarkers.forEach(({ marker, category, city }) => {
+            const categoryMatch = selectedCategories.includes(category);
+            const cityMatch = selectedCities.length === 0 || (city && selectedCities.includes(city));
+            if (categoryMatch && cityMatch) {
+                marker.addTo(map);
+            } else {
+                map.removeLayer(marker);
+            }
+        });
+    }
 });
 
